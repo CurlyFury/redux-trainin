@@ -1,5 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import "./index.css";
+import { addCashAction, getCashAction } from "./store/cashReducer";
+import {
+  addCustomerAction,
+  removeCustomerAction,
+} from "./store/customerReducer";
 
 function App() {
   const dispatch = useDispatch();
@@ -8,11 +13,11 @@ function App() {
   console.log(customers);
 
   const addCash = (cash) => {
-    dispatch({ type: "ADD_CASH", payload: cash });
+    dispatch(addCashAction(cash));
   };
 
   const getMoney = (cash) => {
-    dispatch({ type: "GET_CASH", payload: cash });
+    dispatch(getCashAction(cash));
   };
 
   const addCustomer = (name) => {
@@ -20,10 +25,10 @@ function App() {
       name,
       id: Date.now(),
     };
-    dispatch({ type: "ADD_CUSTOMER", payload: customer });
+    dispatch(addCustomerAction(customer));
   };
   const removeCustomer = (customer) => {
-    dispatch({ type: "REMOVE_CUSTOMERS", payload: customer.id });
+    dispatch(removeCustomerAction(customer.id));
   };
 
   return (
@@ -42,9 +47,6 @@ function App() {
         </button>
         <button onClick={() => addCustomer(prompt("Введите имя"))}>
           Добавить пользователя
-        </button>
-        <button onClick={() => getMoney(Number(prompt("Введите сумму")))}>
-          Удалить пользователя
         </button>
       </div>
       {customers.length > 0 ? (
